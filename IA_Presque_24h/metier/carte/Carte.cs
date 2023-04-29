@@ -22,8 +22,8 @@ namespace IA_Presque_24h.metier.carte
                 {
                     Coordonnees coordonnees = new Coordonnees(i % 6, i / 6);
                     string[] tabCase = tableauCases[i].Split(';');
-                    TypeCase typeCase = ReturnType(tabCase[3]);
-                    Case cases = new Case(coordonnees, typeCase, Convert.ToInt32(tabCase[4]), Convert.ToInt32(tabCase[1]));
+                    TypeCase typeCase = ReturnType(tabCase[2]);
+                    Case cases = new Case(coordonnees, typeCase, Convert.ToInt32(tabCase[3]), Convert.ToInt32(tabCase[0]), Convert.ToInt32(tabCase[1]));
                     ListCase.Add(cases);
                 }
             }
