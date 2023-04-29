@@ -1,3 +1,4 @@
+using IA_Presque_24h.metier.carte;
 using System;
 
 namespace IA_Preque_24h.metier.objets
