@@ -89,7 +89,7 @@ namespace IA_Presque_24h.Modules
                     caseChoisi = cases;
                 }
 
-                if (!cases.Joueur && cases.ValeurCase > (caseChoisi?.ValeurCase ?? 0))
+                if (!cases.Joueur && cases.ValeurTotale > (caseChoisi?.ValeurTotale ?? 0))
                 {
                     caseChoisi = cases;
                 }

@@ -36,7 +36,7 @@ namespace IA_Presque_24h.metier.carte
                     case TypeCase.OR:
                         valeur = butin * 20;
                         break;
-                    case TypeCase.DIAMANT: 
+                    case TypeCase.DIAMANT:
                         valeur = butin * 40;
                         break;
                     case TypeCase.MITHRIL:
@@ -45,8 +45,8 @@ namespace IA_Presque_24h.metier.carte
                 }
                 return valeur;
             }
-        } 
-        
+        }
+
 
         public Case(Coordonnees coordonnees, TypeCase typeCase, int aJoueur, int profondeur, int butin)
         {
@@ -69,7 +69,18 @@ namespace IA_Presque_24h.metier.carte
         public bool Joueur { get => joueur; set => joueur = value; }
         public TypeCase Type { get => type; set => type = value; }
         public Coordonnees Coordonnees { get => coordonnees; set => coordonnees = value; }
-        public int ValeurTotale { get => valeurTotale; set => valeurTotale = value; }
+        public int ValeurTotale
+        {
+            get
+            {
+                if (valeurTotale == 0)
+                    valeurTotale = ValeurCase;
+                return valeurTotale;
+            }
+            set => valeurTotale = value;
+        }
+    
+    
 
         public void Sonar(string messageRecu)
         {
