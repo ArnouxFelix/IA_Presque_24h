@@ -16,9 +16,9 @@ namespace IA_Presque_24h.metier.carte
         {
             string[] tableauCases = messageRecu.Split('|');
             ListCase = new List<Case>();
-            if (tableauCases.Length == 36)
+            if (tableauCases.Length == 37)
             {
-                for (int i = 0; i < tableauCases.Length; i++)
+                for (int i = 0; i < tableauCases.Length-1; i++)
                 {
                     Coordonnees coordonnees = new Coordonnees(i % 6, i / 6);
                     string[] tabCase = tableauCases[i].Split(';');

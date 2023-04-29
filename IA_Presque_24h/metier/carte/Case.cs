@@ -41,7 +41,7 @@ namespace IA_Presque_24h.metier.carte
                         valeur = butin * 80;
                         break;
                 }
-                return 0;
+                return valeur;
             }
         } 
         

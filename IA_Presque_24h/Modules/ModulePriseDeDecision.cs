@@ -68,7 +68,7 @@ namespace IA_Presque_24h.Modules
                     caseChoisi = cases;
                 }
 
-                if (cases.Joueur && cases.ValeurCase > caseChoisi.ValeurCase)
+                if (!cases.Joueur && cases.ValeurCase > (caseChoisi?.ValeurCase ?? 0))
                 {
                     caseChoisi = cases;
                 }
@@ -84,7 +84,7 @@ namespace IA_Presque_24h.Modules
                 }
             }
 
-            decision = String.Format("DEPLACER|{0}|{1}|{2}", 0, caseChoisi.Coordonnees.Ligne, caseChoisi.Coordonnees.Colonne);
+            decision = String.Format("DEPLACER|{0}|{1}|{2}", 0, caseChoisi.Coordonnees.Colonne, caseChoisi.Coordonnees.Ligne);
 
             return decision;
         }
