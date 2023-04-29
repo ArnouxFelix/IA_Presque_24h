@@ -8,6 +8,9 @@ namespace IA_Presque_24h.metier.carte
 {
     public class Carte
     {
-
+        public Carte()
+        {
+            this._fers = new List<Minerais>
+        }
     }
 }
