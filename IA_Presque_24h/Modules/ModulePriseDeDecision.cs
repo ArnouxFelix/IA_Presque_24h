@@ -1,8 +1,10 @@
-﻿using System;
+﻿using IA_Presque_24h.metier.carte;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
 
 namespace IA_Presque_24h.Modules
 {
@@ -52,6 +54,37 @@ namespace IA_Presque_24h.Modules
             }*/
 
             return message;
+        }
+        public string DeterminerMeilleurDeplacement(Carte carte)
+        {
+            string decision = "";
+            Case caseChoisi = null;
+            foreach (Case cases in Carte.Cases)
+            {
+                if (caseChoisi == null && cases.Disponible)
+                {
+                    caseChoisi = cases;
+                }
+
+                if (cases.Disponible && cases.Valeur > caseChoisi.Valeur)
+                {
+                    caseChoisi = cases;
+                }
+            }
+            if (caseChoisi.type == type.Rien)
+            {
+                foreach (Case cases in Carte.Cases)
+                {
+                    if (cases.Disponible && cases.Profondeur > caseChoisi.Profondeur)
+                    {
+                        caseChoisi = cases;
+                    }
+                }
+            }
+
+            decision = String.Format("DEPLACER|{0}|{1}|{2}", 0, caseChoisi.Coordonnees.ligne, caseChoisi.Coordonnees.colonne);
+
+            return decision;
         }
     }
 }

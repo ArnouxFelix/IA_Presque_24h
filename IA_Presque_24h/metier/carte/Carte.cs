@@ -8,10 +8,14 @@ namespace IA_Presque_24h.metier.carte
 {
     public class Carte
     {
+        private List<Case> listCase;
+
+        public List<Case> ListCase { get => listCase; set => listCase = value; }
+
         public Carte(string messageRecu)
         {
             string[] tableauCases = messageRecu.Split('|');
-
+            ListCase = new List<Case>();
             if (tableauCases.Length == 36)
             {
                 for (int i = 0; i < tableauCases.Length; i++)
@@ -20,6 +24,7 @@ namespace IA_Presque_24h.metier.carte
                     string[] tabCase = tableauCases[i].Split(';');
                     TypeCase typeCase = ReturnType(tabCase[3]);
                     Case cases = new Case(coordonnees, typeCase, Convert.ToInt32(tabCase[4]), Convert.ToInt32(tabCase[1]));
+                    ListCase.Add(cases);
                 }
             }
             else
