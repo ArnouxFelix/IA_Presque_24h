@@ -18,18 +18,23 @@ namespace IA_Presque_24h.metier.carte
 
         public Case(Coordonnees coordonnees, TypeCase typeCase, int aJoueur, int profondeur)
         {
-            this.typeCase = typeCase;
-            this.coordonnees = coordonnees;
-            this.profondeur = profondeur;
+            this.TypeCase = typeCase;
+            this.Coordonnees = coordonnees;
+            this.Profondeur = profondeur;
 
             if(aJoueur < 0)
             {
-                this.joueur = false;
+                this.Joueur = false;
             }
             else
             {
-                this.joueur = true;
+                this.Joueur = true;
             }
         }
+
+        public int Profondeur { get => profondeur; set => profondeur = value; }
+        public bool Joueur { get => joueur; set => joueur = value; }
+        public TypeCase TypeCase { get => typeCase; set => typeCase = value; }
+        public Coordonnees Coordonnees { get => coordonnees; set => coordonnees = value; }
     }
 }
