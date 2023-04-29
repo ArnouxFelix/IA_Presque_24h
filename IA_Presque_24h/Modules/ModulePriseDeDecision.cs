@@ -20,54 +20,16 @@ namespace IA_Presque_24h.Modules
         /// <returns>Le message à envoyer au serveur</returns>
         public string DeterminerNouvelleActionIABourre(string messageRecuDuServeur)
         {
-            string message = "";
-            if (this.ModuleMemoire.HasCarte())
-            {
-                Random rand = new Random();
-                int ligne = rand.Next(0, 5);
-                int colonne = rand.Next(0, 5);
-                message = $"DEPLACER|0|{ligne}|{colonne}";
-                if (messageRecuDuServeur.StartsWith("NOK"))
-                {
-                    message = "FIN_TOUR";
-                }
-            }
-            else
-            {
-                message = "MAP";
-            }
             
-            /*Random rand = new Random();
+            Random rand = new Random();
             int ligne = rand.Next(0, 5);
             int colonne = rand.Next(0, 5);
             string message = $"DEPLACER|0|{ligne}|{colonne}";
             if (messageRecuDuServeur.StartsWith("NOK"))
             {
                 message = "FIN_TOUR";
-            }*/
-            //string message = "";
-            //if (this.ModuleMemoire.HasCarte())
-            //{
-            //    message = "END";
-            //}
-            //else
-            //{
-            //    message = "MAP";
-            //}
-            /*Random rand = new Random();
-            string[] tabMouv = new string[6] { "UP", "UPRIGHT", "UPLEFT", "DOWNLEFT", "DOWN", "DOWNRIGHT" };
-            int mouvIndex;
-            
-
-            if (messageRecuDuServeur.Equals("OK") || messageRecuDuServeur.Equals("Debut de la partie"))
-            {
-                mouvIndex = rand.Next(tabMouv.Length);
-                message = $"MOVE 0 {tabMouv[mouvIndex]}";
             }
-            else
-            {
-                message = "END";
-            }*/
+           
 
             return message;
         }
@@ -82,14 +44,14 @@ namespace IA_Presque_24h.Modules
                     caseChoisi = cases;
                 }
 
-                if (cases.Joueur && cases.Valeur > caseChoisi.Valeur)
+                if (cases.Joueur && cases.ValeurCase > caseChoisi.ValeurCase)
                 {
                     caseChoisi = cases;
                 }
             }
-            if (caseChoisi.type == type.Rien)
+            if (caseChoisi.Type == TypeCase.RIEN)
             {
-                foreach (Case cases in Carte.Cases)
+                foreach (Case cases in carte.ListCase)
                 {
                     if (cases.Joueur && cases.Profondeur > caseChoisi.Profondeur)
                     {
@@ -98,7 +60,7 @@ namespace IA_Presque_24h.Modules
                 }
             }
 
-            decision = String.Format("DEPLACER|{0}|{1}|{2}", 0, caseChoisi.Coordonnees, caseChoisi.Coordonnees.colonne);
+            decision = String.Format("DEPLACER|{0}|{1}|{2}", 0, caseChoisi.Coordonnees.Ligne, caseChoisi.Coordonnees.Colonne);
 
             return decision;
         }
