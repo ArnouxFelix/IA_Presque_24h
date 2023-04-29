@@ -25,7 +25,7 @@ namespace IA_Presque_24h.Modules
         /// <summary>Méthode déterminant la prochaine action à réaliser</summary>
         /// <param name="messageRecuDuServeur">Le dernier message reçu du serveur</param>
         /// <returns>Le message à envoyer au serveur</returns>
-        public string DeterminerNouvelleAction(string messageRecuDuServeur, int scoreJoureur, List<Nain> listNain)
+        public string DeterminerNouvelleAction(Carte carte, int scoreJoureur, List<Nain> listNain)
         {
             string returning = "";
             Nain piocheLaPlusBasse = listNain[0];
@@ -94,12 +94,14 @@ namespace IA_Presque_24h.Modules
                     caseChoisi = cases;
                 }
             }
-            if (caseChoisi.Type == TypeCase.RIEN)
-            {
+            if (caseChoisi.ValeurTotale <= 0)
+            {               
                 Random random = new Random();
                 caseChoisi = carte.ListCase[random.Next(carte.ListCase.Count)];
-
-
+                while (caseChoisi.Joueur)
+                {
+                    caseChoisi = carte.ListCase[random.Next(carte.ListCase.Count)];
+                }
             }
 
             return caseChoisi;

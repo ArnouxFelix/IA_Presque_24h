@@ -32,7 +32,9 @@ namespace IA_Presque_24h
 
         private bool aFiniDeCommuniquer;
 
-        private Nain[] equipe = new Nain[3];
+        private List<Nain> equipe = new List<Nain>();
+
+        private int numeroEquipe = 0;
 
         /// <summary>Constructeur par défaut</summary>
         public IA()
@@ -42,6 +44,8 @@ namespace IA_Presque_24h
             this.modulePriseDeDecisions = new ModulePriseDeDecisions(this);
             this.moduleReaction = new ModuleReaction(this);
             this.aFiniDeCommuniquer = false;
+            equipe.Add(new Nain());
+            
         }
 
         /// <summary>Démarre l'IA</summary>
@@ -60,12 +64,18 @@ namespace IA_Presque_24h
             //Envoi du nom de la team
             this.moduleCommunication.EnvoyerMessage(messageEnvoye);
 
+
+
             //Boucle de discussion
             while (!this.aFiniDeCommuniquer)
             {
                 //Réception du message du serveur
                 messageRecu = this.ModuleCommunication.RecevoirMessage();
-                while (messageRecu.StartsWith("DEBUT_TOUR"))
+                if (messageRecu.Contains("Bonjour"))
+                {
+                    numeroEquipe = Convert.ToInt32(messageRecu.Split('|')[1]);
+                }
+                while (messageRecu.StartsWith("DEBUT_TOUR")) ;
                 {
                     this.moduleCommunication.EnvoyerMessage("CARTE");
                     Carte map = new Carte(this.ModuleCommunication.RecevoirMessage());
@@ -85,7 +95,7 @@ namespace IA_Presque_24h
                     Console.WriteLine("||"+ scoreRecu[1] + "||");
                     //Détermination des deux prochaines actions
 
-                        messageEnvoye = this.ModulePriseDeDecisions.DeterminerMeilleurDeplacement(map);
+                        messageEnvoye = this.ModulePriseDeDecisions.DeterminerNouvelleAction(map,Convert.ToInt32(scoreRecu[numeroEquipe+1]),);
                         this.moduleCommunication.EnvoyerMessage(messageEnvoye);
                         messageRecu = this.ModuleCommunication.RecevoirMessage();
                         //messageEnvoye = this.ModulePriseDeDecisions.DeterminerNouvelleAction(messageRecu, Convert.ToInt32(scoreRecu[1]));
