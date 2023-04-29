@@ -7,9 +7,12 @@ using System.Threading.Tasks;
 
 namespace IA_Presque_24h.metier.nain
 {
-    internal class Nain
+    public class Nain
     {
-        private Case coordonnes;
+        private Case _case;
         private int nvPioche;
+
+        public Case Case { get => _case; set => _case = value; }
+        public int NvPioche { get => nvPioche; set => nvPioche = value; }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using IA_Presque_24h.metier.carte;
+using IA_Presque_24h.metier.nain;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -56,11 +57,21 @@ namespace IA_Presque_24h.Modules
             }
             return returning;
         }
-        
-        public string DeterminerMeilleurDeplacement(Carte carte)
+
+        public Case DeterminerMeilleurDeplacement(Carte carte, Nain nain)
         {
             string decision = "";
             Case caseChoisi = null;
+            for (int i = 0; i<carte.ListCase.Count; i++)
+            {
+                if(nain.Case.Coordonnees.Ligne == carte.ListCase[i].Coordonnees.Ligne &&
+                    nain.Case.Coordonnees.Colonne == carte.ListCase[i].Coordonnees.Colonne)
+                {
+                    carte.ListCase[i].Joueur = false;
+                    caseChoisi = nain.Case;
+                }
+            }
+            
             foreach (Case cases in carte.ListCase)
             {
                 if (caseChoisi == null && !cases.Joueur)
@@ -75,18 +86,17 @@ namespace IA_Presque_24h.Modules
             }
             if (caseChoisi.Type == TypeCase.RIEN)
             {
-                foreach (Case cases in carte.ListCase)
-                {
-                    if (cases.Joueur && cases.Profondeur > caseChoisi.Profondeur)
-                    {
-                        caseChoisi = cases;
-                    }
-                }
+                Random random = new Random();
+                caseChoisi = carte.ListCase[random.Next(carte.ListCase.Count)];
+
+
             }
 
-            decision = String.Format("DEPLACER|{0}|{1}|{2}", 0, caseChoisi.Coordonnees.Colonne, caseChoisi.Coordonnees.Ligne);
+            return caseChoisi;
 
-            return decision;
+            //decision = String.Format("DEPLACER|{0}|{1}|{2}", 0, caseChoisi.Coordonnees.Colonne, caseChoisi.Coordonnees.Ligne);
+
+            
         }
     }
 }
