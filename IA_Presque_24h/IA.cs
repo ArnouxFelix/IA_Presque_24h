@@ -68,6 +68,14 @@ namespace IA_Presque_24h
                 {
                     this.moduleCommunication.EnvoyerMessage("CARTE");
                     Carte map = new Carte(this.ModuleCommunication.RecevoirMessage());
+                    if(moduleMemoire.HasCarte())
+                    {
+                        moduleMemoire.majCarte(map);
+                    }
+                    else
+                    {
+                        moduleMemoire.Carte = map;
+                    }
                     // envoie et reception du score
                     this.ModuleCommunication.EnvoyerMessage("SCORES");
                     string stringScoreRecu = this.ModuleCommunication.RecevoirMessage();
