@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.NetworkInformation;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -15,24 +16,47 @@ namespace IA_Presque_24h.Modules
         /// <param name="ia">Ia dont dépend le module</param>
         public ModulePriseDeDecisions(IA ia) : base(ia) { }
 
+        Random rand = new Random();
+        public static int nbActionRestant = 2;
+        public static int ameliorationPioche = 1;
+
         /// <summary>Méthode déterminant la prochaine action à réaliser</summary>
         /// <param name="messageRecuDuServeur">Le dernier message reçu du serveur</param>
         /// <returns>Le message à envoyer au serveur</returns>
-        public string DeterminerNouvelleActionIABourre(string messageRecuDuServeur)
+        public string DeterminerNouvelleAction(string messageRecuDuServeur, int scoreJoureur)
         {
-            
-            Random rand = new Random();
-            int ligne = rand.Next(0, 5);
-            int colonne = rand.Next(0, 5);
-            string message = $"DEPLACER|0|{ligne}|{colonne}";
-            if (messageRecuDuServeur.StartsWith("NOK"))
+            string returning;
+            if (scoreJoureur >= 200 && ameliorationPioche == 1)
             {
-                message = "FIN_TOUR";
+                returning = "AMELIORER|0";
+                ameliorationPioche = 2;
+                nbActionRestant--;
             }
-           
+            else if (scoreJoureur >= 250)
+            {
+                returning = "EMBAUCHER";
+                nbActionRestant--;
+            }
+            else if (scoreJoureur >= 400 && ameliorationPioche == 2)
+            {
+                returning = "AMELIORER|0";
+                ameliorationPioche = 3;
+                nbActionRestant--;
+            }
+            else if (nbActionRestant > 0)
+            {
 
-            return message;
+                returning = $"DEPLACER|0|{rand.NextInt64(0, 6)}|{rand.NextInt64(0, 6)}";
+                nbActionRestant--;
+            }
+            else
+            {
+                returning = "FIN_TOUR";
+                nbActionRestant = 2;
+            }
+            return returning;
         }
+        
         public string DeterminerMeilleurDeplacement(Carte carte)
         {
             string decision = "";
@@ -44,7 +68,7 @@ namespace IA_Presque_24h.Modules
                     caseChoisi = cases;
                 }
 
-                if (cases.Joueur && cases.ValeurCase > caseChoisi.ValeurCase)
+                if (!cases.Joueur && cases.ValeurCase > (caseChoisi?.ValeurCase ?? 0))
                 {
                     caseChoisi = cases;
                 }
@@ -60,7 +84,7 @@ namespace IA_Presque_24h.Modules
                 }
             }
 
-            decision = String.Format("DEPLACER|{0}|{1}|{2}", 0, caseChoisi.Coordonnees.Ligne, caseChoisi.Coordonnees.Colonne);
+            decision = String.Format("DEPLACER|{0}|{1}|{2}", 0, caseChoisi.Coordonnees.Colonne, caseChoisi.Coordonnees.Ligne);
 
             return decision;
         }
