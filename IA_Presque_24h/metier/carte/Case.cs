@@ -16,11 +16,14 @@ namespace IA_Presque_24h.metier.carte
 
         private Coordonnees coordonnees;
 
-        public Case(Coordonnees coordonnees, TypeCase typeCase, int aJoueur, int profondeur)
+        private int butin;
+
+        public Case(Coordonnees coordonnees, TypeCase typeCase, int aJoueur, int profondeur, int butin)
         {
             this.TypeCase = typeCase;
             this.Coordonnees = coordonnees;
             this.Profondeur = profondeur;
+            this.butin = butin;
 
             if(aJoueur < 0)
             {
