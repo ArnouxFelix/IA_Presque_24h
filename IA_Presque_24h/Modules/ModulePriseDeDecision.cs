@@ -50,8 +50,7 @@ namespace IA_Presque_24h.Modules
                 message = "END";
             }*/
 
-            //return message;
-            return "";
+            return message;
         }
     }
 }

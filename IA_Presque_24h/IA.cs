@@ -63,17 +63,22 @@ namespace IA_Presque_24h
             {
                 //Réception du message du serveur
                 messageRecu = this.ModuleCommunication.RecevoirMessage();
-                //Réaction au message 
-                this.ModuleReaction.ReagirAuMessageRecu(messageEnvoye, messageRecu);
-                //Détermination de la prochaine action
-                messageEnvoye = this.ModulePriseDeDecisions.DeterminerNouvelleActionIABourre(messageRecu);
-
-                if (messageEnvoye.Equals("END"))
+                while (!messageRecu.StartsWith("DEBUT_TOUR"))
                 {
-                    ArreterLaCommunication();
+                    for(int i = 0; i < 2; i++)
+                    {
+                        messageRecu = this.ModuleCommunication.RecevoirMessage();
+                        //Détermination des deux prochaines actions
+                        messageEnvoye = this.ModulePriseDeDecisions.DeterminerNouvelleActionIABourre(messageRecu);
+
+                        if (messageEnvoye.Equals("END"))
+                        {
+                            ArreterLaCommunication();
+                        }
+                        //Envoi du message au serveur
+                        this.moduleCommunication.EnvoyerMessage(messageEnvoye);
+                    }  
                 }
-                //Envoi du message au serveur
-                this.moduleCommunication.EnvoyerMessage(messageEnvoye);
             }
 
             //Réception du dernier message de l'IA avant fermeture de la connexion
