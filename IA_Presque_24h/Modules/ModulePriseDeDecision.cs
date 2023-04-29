@@ -25,7 +25,7 @@ namespace IA_Presque_24h.Modules
         /// <summary>Méthode déterminant la prochaine action à réaliser</summary>
         /// <param name="messageRecuDuServeur">Le dernier message reçu du serveur</param>
         /// <returns>Le message à envoyer au serveur</returns>
-        public string DeterminerNouvelleAction(string messageRecuDuServeur, int scoreJoureur, List<Nain> listNain)
+        public string DeterminerNouvelleAction(int scoreJoureur, List<Nain> listNain)
         {
             string returning = "";
             Nain piocheLaPlusBasse = listNain[0];

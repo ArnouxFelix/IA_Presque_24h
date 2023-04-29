@@ -32,7 +32,7 @@ namespace IA_Presque_24h
 
         private bool aFiniDeCommuniquer;
 
-        private Nain[] equipe = new Nain[3];
+        private List<Nain> equipe = new List<Nain>();
 
         /// <summary>Constructeur par défaut</summary>
         public IA()
@@ -77,6 +77,7 @@ namespace IA_Presque_24h
                     {
                         moduleMemoire.Carte = map;
                     }
+
                     // envoie et reception du score
                     this.ModuleCommunication.EnvoyerMessage("SCORES");
                     string stringScoreRecu = this.ModuleCommunication.RecevoirMessage();
@@ -85,22 +86,25 @@ namespace IA_Presque_24h
                     Console.WriteLine("||"+ scoreRecu[1] + "||");
                     //Détermination des deux prochaines actions
 
-                        messageEnvoye = this.ModulePriseDeDecisions.DeterminerMeilleurDeplacement(map);
-                        this.moduleCommunication.EnvoyerMessage(messageEnvoye);
-                        messageRecu = this.ModuleCommunication.RecevoirMessage();
-                        //messageEnvoye = this.ModulePriseDeDecisions.DeterminerNouvelleAction(messageRecu, Convert.ToInt32(scoreRecu[1]));
-                        if (messageEnvoye.Equals("END"))
+                    for (int i = 0; i < 1; i++)
+                    {
+                        messageEnvoye = this.ModulePriseDeDecisions.DeterminerNouvelleAction(Convert.ToInt32(scoreRecu[1]),equipe);
+                        moduleCommunication.EnvoyerMessage(messageEnvoye);
+                        messageRecu = moduleCommunication.RecevoirMessage();
+                        if (messageEnvoye.StartsWith("SONAR"))
                         {
-                            ArreterLaCommunication();
+                            Nain.ChoixNain(equipe).Case.Sonar(messageRecu);
                         }
-                        //Envoi du message au serveur
-                        //this.moduleCommunication.EnvoyerMessage(messageEnvoye);
-                        //messageRecu = this.ModuleCommunication.RecevoirMessage();
 
-                        //messageEnvoye = this.ModulePriseDeDecisions.DeterminerNouvelleAction(messageRecu, Convert.ToInt32(scoreRecu[1]));
-                        //this.moduleCommunication.EnvoyerMessage(messageEnvoye);
-                        this.moduleCommunication.EnvoyerMessage("FIN_TOUR");
-                        messageRecu = this.ModuleCommunication.RecevoirMessage();
+                    }
+
+                    if (messageEnvoye.Equals("END"))
+                    {
+                        ArreterLaCommunication();
+                    }
+                        
+                    this.moduleCommunication.EnvoyerMessage("FIN_TOUR");
+                    messageRecu = this.ModuleCommunication.RecevoirMessage();
                 
                 }
             }
