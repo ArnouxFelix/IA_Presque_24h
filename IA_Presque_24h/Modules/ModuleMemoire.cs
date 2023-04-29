@@ -16,17 +16,35 @@ namespace IA_Presque_24h.Modules
         /// <param name="ia">L'IA dont dépend le module</param>
         public ModuleMemoire(IA ia) : base(ia) 
         {
-            this.carte = null;
+            this.Carte = null;
         }
+
+        public Carte Carte { get => carte; set => carte = value; }
 
         public void GenererCarte(string messageRecu)
         {
-            this.carte = new Carte(messageRecu);
+            this.Carte = new Carte(messageRecu);
         }
 
         public bool HasCarte()
         {
-           return this.carte != null;
+           return this.Carte != null;
+        }
+
+        public void majCarte(Carte nouvelleCarte)
+        {
+            for(int i = 0; i < this.Carte.ListCase.Count; i++)
+            {
+                if(this.Carte.ListCase[i].ValeurCase != this.Carte.ListCase[i].ValeurTotale)
+                {
+                    if (this.Carte.ListCase[i].Profondeur != nouvelleCarte.ListCase[i].Profondeur)
+                    {
+                        nouvelleCarte.ListCase[i].ValeurTotale -= this.Carte.ListCase[i].ValeurCase;
+                    }
+                }
+                
+            }
+            this.Carte = nouvelleCarte;
         }
     }
 }

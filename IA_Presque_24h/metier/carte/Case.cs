@@ -18,6 +18,8 @@ namespace IA_Presque_24h.metier.carte
 
         private int butin;
 
+        private int valeurTotale;
+
         public int ValeurCase
         {
             get
@@ -67,6 +69,24 @@ namespace IA_Presque_24h.metier.carte
         public bool Joueur { get => joueur; set => joueur = value; }
         public TypeCase Type { get => type; set => type = value; }
         public Coordonnees Coordonnees { get => coordonnees; set => coordonnees = value; }
+        public int ValeurTotale { get => valeurTotale; set => valeurTotale = value; }
+
+        public void Sonar(string messageRecu)
+        {
+            valeurTotale = 0;
+            string[] sonar = messageRecu.Split('|');
+            foreach (string sonarStr in sonar)
+            {
+                if (Convert.ToInt32(sonarStr) >= 0)
+                {
+                    valeurTotale += Convert.ToInt32(sonarStr);
+                }
+                else
+                {
+                    valeurTotale += -1000;
+                }
+            }
+        }
     }
 
 
