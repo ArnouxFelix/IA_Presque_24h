@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IAGraphEffect.Modules
+namespace IA_Presque_24h.Modules
 {
     /// <summary>Module en charge de gérer les réactions de l'IA à une réponse du serveur</summary>
     public class ModuleReaction : Module
@@ -26,7 +26,7 @@ namespace IAGraphEffect.Modules
 
         private void ReactionCarte(string messageRecu)
         {
-            this.ModuleMemoire.GenererCarte(messageRecu);
+            //this.ModuleMemoire.GenererCarte(messageRecu);
             
         }
     }

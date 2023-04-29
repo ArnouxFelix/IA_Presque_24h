@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IAGraphEffect.Modules
+namespace IA_Presque_24h.Modules
 {
     /// <summary>
     /// Classe abstraite de module. Un module est une partie de l'IA.

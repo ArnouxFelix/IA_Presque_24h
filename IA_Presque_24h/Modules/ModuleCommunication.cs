@@ -5,7 +5,7 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IAGraphEffect.Modules
+namespace IA_Presque_24h.Modules
 {
     /// <summary>Module en charge de la communication avec le sereur</summary>
     public class ModuleCommunication : Module

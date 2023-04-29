@@ -1,11 +1,11 @@
-﻿using IAGraphEffect.Modules;
+﻿using IA_Presque_24h.Modules;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IAGraphEffect
+namespace IA_Presque_24h
 {
     /// <summary>
     /// Cette classe représente le coeur de l'IA. Elle joue un rôle de "médiateur" entre les différents modules.

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IAGraphEffect.Modules
+namespace IA_Presque_24h.Modules
 {
     /// <summary>Ce module est en charge de prendre les décisions pour l'IA (que doit je faire ?)</summary>
     public class ModulePriseDeDecisions : Module
@@ -18,15 +18,15 @@ namespace IAGraphEffect.Modules
         /// <returns>Le message à envoyer au serveur</returns>
         public string DeterminerNouvelleAction(string messageRecuDuServeur)
         {
-            string message = "";
-            if (this.ModuleMemoire.HasCarte())
-            {
-                message = "END";
-            }
-            else
-            {
-                message = "MAP";
-            }
+            //string message = "";
+            //if (this.ModuleMemoire.HasCarte())
+            //{
+            //    message = "END";
+            //}
+            //else
+            //{
+            //    message = "MAP";
+            //}
             /*Random rand = new Random();
             string[] tabMouv = new string[6] { "UP", "UPRIGHT", "UPLEFT", "DOWNLEFT", "DOWN", "DOWNRIGHT" };
             int mouvIndex;
@@ -41,8 +41,9 @@ namespace IAGraphEffect.Modules
             {
                 message = "END";
             }*/
-            
-            return message;
+
+            //return message;
+            return "";
         }
     }
 }

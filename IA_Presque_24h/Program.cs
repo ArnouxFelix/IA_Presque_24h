@@ -1,2 +1,5 @@
-﻿// See https://aka.ms/new-console-template for more information
-Console.WriteLine("Hello, World!");
+﻿using IA_Presque_24h;
+
+IA ia = new IA();
+ia.Start();
+
