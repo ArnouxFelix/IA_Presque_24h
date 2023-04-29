@@ -48,11 +48,15 @@ namespace IA_Presque_24h
             //Initialisation
             this.aFiniDeCommuniquer = false;
             string messageRecu = "";
-            string messageEnvoye = "";
+            string messageEnvoye = "InsertName";
 
 
             //Mise en place de la connexion au serveur
             this.ModuleCommunication.EtablirConnexion();
+            //Réception du message du serveur
+            messageRecu = this.ModuleCommunication.RecevoirMessage();
+            //Envoi du nom de la team
+            this.moduleCommunication.EnvoyerMessage(messageEnvoye);
 
             //Boucle de discussion
             while (!this.aFiniDeCommuniquer)
