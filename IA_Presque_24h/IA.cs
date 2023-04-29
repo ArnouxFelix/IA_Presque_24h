@@ -66,7 +66,7 @@ namespace IA_Presque_24h
                 //Réaction au message 
                 this.ModuleReaction.ReagirAuMessageRecu(messageEnvoye, messageRecu);
                 //Détermination de la prochaine action
-                messageEnvoye = this.ModulePriseDeDecisions.DeterminerNouvelleAction(messageRecu);
+                messageEnvoye = this.ModulePriseDeDecisions.DeterminerNouvelleActionIABourre(messageRecu);
 
                 if (messageEnvoye.Equals("END"))
                 {

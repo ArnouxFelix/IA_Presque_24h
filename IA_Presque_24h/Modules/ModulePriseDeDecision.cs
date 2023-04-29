@@ -16,8 +16,16 @@ namespace IA_Presque_24h.Modules
         /// <summary>Méthode déterminant la prochaine action à réaliser</summary>
         /// <param name="messageRecuDuServeur">Le dernier message reçu du serveur</param>
         /// <returns>Le message à envoyer au serveur</returns>
-        public string DeterminerNouvelleAction(string messageRecuDuServeur)
+        public string DeterminerNouvelleActionIABourre(string messageRecuDuServeur)
         {
+            Random rand = new Random();
+            int ligne = rand.Next(0, 5);
+            int colonne = rand.Next(0, 5);
+            string message = $"DEPLACER|0|{ligne}|{colonne}";
+            if (messageRecuDuServeur.StartsWith("NOK"))
+            {
+                message = "FIN_TOUR";
+            }
             //string message = "";
             //if (this.ModuleMemoire.HasCarte())
             //{
