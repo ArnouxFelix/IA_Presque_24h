@@ -4,6 +4,7 @@
     {
         RIEN,
         FER,
+        OR,
         DIAMANT,
         MITHRIL,
     }
