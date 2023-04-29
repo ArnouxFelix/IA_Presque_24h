@@ -2,6 +2,7 @@
 using IA_Presque_24h.metier.nain;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.Linq;
 using System.Net.NetworkInformation;
 using System.Text;
@@ -24,36 +25,45 @@ namespace IA_Presque_24h.Modules
         /// <summary>Méthode déterminant la prochaine action à réaliser</summary>
         /// <param name="messageRecuDuServeur">Le dernier message reçu du serveur</param>
         /// <returns>Le message à envoyer au serveur</returns>
-        public string DeterminerNouvelleAction(string messageRecuDuServeur, int scoreJoureur)
+        public string DeterminerNouvelleAction(string messageRecuDuServeur, int scoreJoureur, List<Nain> listNain)
         {
-            string returning;
-            if (scoreJoureur >= 200 && ameliorationPioche == 1)
+            string returning = "";
+            Nain piocheLaPlusBasse = listNain[0];
+            for (int i = 0; i < listNain.Count(); i++)
             {
-                returning = "AMELIORER|0";
-                ameliorationPioche = 2;
-                nbActionRestant--;
+                if (piocheLaPlusBasse.NvPioche > listNain[i].NvPioche)
+                {
+                    piocheLaPlusBasse = listNain[i];
+                }
             }
-            else if (scoreJoureur >= 250)
+
+            if (scoreJoureur >=250 && listNain.Count() == 1)
             {
                 returning = "EMBAUCHER";
-                nbActionRestant--;
             }
-            else if (scoreJoureur >= 400 && ameliorationPioche == 2)
+            else if(scoreJoureur >= 200)
             {
-                returning = "AMELIORER|0";
-                ameliorationPioche = 3;
-                nbActionRestant--;
+                switch (piocheLaPlusBasse.NvPioche)
+                {
+                    case 0:
+                        returning = $"AMELIORER|{listNain.IndexOf(piocheLaPlusBasse)}";                   
+                        break;
+                    case 1:
+                        if (scoreJoureur >= 400)
+                        {
+                            returning = $"AMELIORER|{listNain.IndexOf(piocheLaPlusBasse)}";
+                      
+                        }
+                        break;
+                }
             }
-            else if (nbActionRestant > 0)
+            else if(scoreJoureur >= 250 && listNain.Count() == 2)
             {
-
-                returning = $"DEPLACER|0|{rand.NextInt64(0, 6)}|{rand.NextInt64(0, 6)}";
-                nbActionRestant--;
+                returning = "EMBAUCHER";
             }
             else
             {
-                returning = "FIN_TOUR";
-                nbActionRestant = 2;
+                returning = $"SONAR|{ChoixNain(listNain).Case.Coordonnees.Ligne}|{ChoixNain(listNain).Case.Coordonnees.Colonne}";
             }
             return returning;
         }
