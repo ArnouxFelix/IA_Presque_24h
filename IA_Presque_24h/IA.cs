@@ -105,6 +105,10 @@ namespace IA_Presque_24h
                         {
                             Nain.ChoixNain(equipe).Case.Sonar(messageRecu);
                         }
+                        else if (messageEnvoye.StartsWith("EMBAUCHER"))
+                        {
+                            equipe.Add(new Nain());
+                        }
 
                     }
 
