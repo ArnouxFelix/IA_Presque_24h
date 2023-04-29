@@ -11,11 +11,11 @@ namespace IA_Presque_24h.metier.nain
     public class Nain
     {
         private Case _case;
-        private int nvPioche;
+        private int nvPioche = 0;
 
         public Case Case { get => _case; set => _case = value; }
         public int NvPioche { get => nvPioche; set => nvPioche = value; }
-        public Nain ChoixNain(List<Nain> nain)
+        public static Nain ChoixNain(List<Nain> nain)
         {
             Nain nainADeplacer = nain[0];
             for (int i = 0; i < nain.Count; i++)

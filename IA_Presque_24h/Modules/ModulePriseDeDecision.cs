@@ -63,7 +63,7 @@ namespace IA_Presque_24h.Modules
             }
             else
             {
-                returning = $"SONAR|{ChoixNain(listNain).Case.Coordonnees.Ligne}|{ChoixNain(listNain).Case.Coordonnees.Colonne}";
+                returning = $"SONAR|{Nain.ChoixNain(listNain).Case.Coordonnees.Ligne}|{Nain.ChoixNain(listNain).Case.Coordonnees.Colonne}";
             }
             return returning;
         }
