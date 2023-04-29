@@ -98,7 +98,7 @@ namespace IA_Presque_24h
 
                     for (int i = 0; i < 1; i++)
                     {
-                        messageEnvoye = this.ModulePriseDeDecisions.DeterminerNouvelleAction(Convert.ToInt32(scoreRecu[1]),equipe);
+                        messageEnvoye = this.ModulePriseDeDecisions.DeterminerNouvelleAction(moduleMemoire.Carte,Convert.ToInt32(scoreRecu[1]),equipe);
                         moduleCommunication.EnvoyerMessage(messageEnvoye);
                         messageRecu = moduleCommunication.RecevoirMessage();
                         if (messageEnvoye.StartsWith("SONAR"))
