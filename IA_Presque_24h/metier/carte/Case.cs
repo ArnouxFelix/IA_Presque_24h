@@ -12,20 +12,48 @@ namespace IA_Presque_24h.metier.carte
 
         private bool joueur;
 
-        private TypeCase typeCase;
+        private TypeCase type;
 
         private Coordonnees coordonnees;
 
         private int butin;
 
+        public int ValeurCase
+        {
+            get
+            {
+                int valeur = 0;
+                switch (type)
+                {
+                    case TypeCase.RIEN:
+                        valeur = 0;
+                        break;
+                    case TypeCase.FER:
+                        valeur = butin * 10;
+                        break;
+                    case TypeCase.OR:
+                        valeur = butin * 20;
+                        break;
+                    case TypeCase.DIAMANT: 
+                        valeur = butin * 40;
+                        break;
+                    case TypeCase.MITHRIL:
+                        valeur = butin * 80;
+                        break;
+                }
+                return 0;
+            }
+        } 
+        
+
         public Case(Coordonnees coordonnees, TypeCase typeCase, int aJoueur, int profondeur, int butin)
         {
-            this.TypeCase = typeCase;
+            this.Type = typeCase;
             this.Coordonnees = coordonnees;
             this.Profondeur = profondeur;
             this.butin = butin;
 
-            if(aJoueur < 0)
+            if (aJoueur < 0)
             {
                 this.Joueur = false;
             }
@@ -37,7 +65,13 @@ namespace IA_Presque_24h.metier.carte
 
         public int Profondeur { get => profondeur; set => profondeur = value; }
         public bool Joueur { get => joueur; set => joueur = value; }
-        public TypeCase TypeCase { get => typeCase; set => typeCase = value; }
+        public TypeCase Type { get => type; set => type = value; }
         public Coordonnees Coordonnees { get => coordonnees; set => coordonnees = value; }
     }
+
+
 }
+
+
+    
+
