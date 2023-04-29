@@ -30,7 +30,6 @@ namespace IA_Presque_24h.metier.carte
         }
 
 
-
         public TypeCase ReturnType(string Type)
         {
             TypeCase typeCase = TypeCase.RIEN;

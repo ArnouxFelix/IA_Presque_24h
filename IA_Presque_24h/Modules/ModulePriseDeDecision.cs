@@ -18,6 +18,7 @@ namespace IA_Presque_24h.Modules
         /// <returns>Le message à envoyer au serveur</returns>
         public string DeterminerNouvelleActionIABourre(string messageRecuDuServeur)
         {
+            this.ModuleMemoire.GenererCarte(messageRecuDuServeur);
             Random rand = new Random();
             int ligne = rand.Next(0, 5);
             int colonne = rand.Next(0, 5);

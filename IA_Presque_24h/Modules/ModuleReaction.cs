@@ -26,7 +26,7 @@ namespace IA_Presque_24h.Modules
 
         private void ReactionCarte(string messageRecu)
         {
-            //this.ModuleMemoire.GenererCarte(messageRecu);
+            this.ModuleMemoire.GenererCarte(messageRecu);
             
         }
     }
