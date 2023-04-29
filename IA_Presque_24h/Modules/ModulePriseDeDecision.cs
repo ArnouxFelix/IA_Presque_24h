@@ -20,15 +20,31 @@ namespace IA_Presque_24h.Modules
         /// <returns>Le message à envoyer au serveur</returns>
         public string DeterminerNouvelleActionIABourre(string messageRecuDuServeur)
         {
-            this.ModuleMemoire.GenererCarte(messageRecuDuServeur);
-            Random rand = new Random();
+            string message = "";
+            if (this.ModuleMemoire.HasCarte())
+            {
+                Random rand = new Random();
+                int ligne = rand.Next(0, 5);
+                int colonne = rand.Next(0, 5);
+                message = $"DEPLACER|0|{ligne}|{colonne}";
+                if (messageRecuDuServeur.StartsWith("NOK"))
+                {
+                    message = "FIN_TOUR";
+                }
+            }
+            else
+            {
+                message = "MAP";
+            }
+            
+            /*Random rand = new Random();
             int ligne = rand.Next(0, 5);
             int colonne = rand.Next(0, 5);
             string message = $"DEPLACER|0|{ligne}|{colonne}";
             if (messageRecuDuServeur.StartsWith("NOK"))
             {
                 message = "FIN_TOUR";
-            }
+            }*/
             //string message = "";
             //if (this.ModuleMemoire.HasCarte())
             //{
@@ -59,14 +75,14 @@ namespace IA_Presque_24h.Modules
         {
             string decision = "";
             Case caseChoisi = null;
-            foreach (Case cases in Carte.Cases)
+            foreach (Case cases in carte.ListCase)
             {
-                if (caseChoisi == null && cases.Disponible)
+                if (caseChoisi == null && !cases.Joueur)
                 {
                     caseChoisi = cases;
                 }
 
-                if (cases.Disponible && cases.Valeur > caseChoisi.Valeur)
+                if (cases.Joueur && cases.Valeur > caseChoisi.Valeur)
                 {
                     caseChoisi = cases;
                 }
@@ -75,14 +91,14 @@ namespace IA_Presque_24h.Modules
             {
                 foreach (Case cases in Carte.Cases)
                 {
-                    if (cases.Disponible && cases.Profondeur > caseChoisi.Profondeur)
+                    if (cases.Joueur && cases.Profondeur > caseChoisi.Profondeur)
                     {
                         caseChoisi = cases;
                     }
                 }
             }
 
-            decision = String.Format("DEPLACER|{0}|{1}|{2}", 0, caseChoisi.Coordonnees.ligne, caseChoisi.Coordonnees.colonne);
+            decision = String.Format("DEPLACER|{0}|{1}|{2}", 0, caseChoisi.Coordonnees, caseChoisi.Coordonnees.colonne);
 
             return decision;
         }

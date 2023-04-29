@@ -11,7 +11,15 @@ namespace IA_Presque_24h.metier.carte
         private int x;
         private int y;
 
-        
+        public int Ligne
+        {
+            get { return x; }
+        }
+
+        public int Colonne
+        {
+            get { return y; }
+        }
 
         public Coordonnees(int x, int y)
         {
