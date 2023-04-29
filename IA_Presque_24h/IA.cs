@@ -65,19 +65,18 @@ namespace IA_Presque_24h
                 messageRecu = this.ModuleCommunication.RecevoirMessage();
                 while (!messageRecu.StartsWith("DEBUT_TOUR"))
                 {
-                    for(int i = 0; i < 2; i++)
-                    {
                         messageRecu = this.ModuleCommunication.RecevoirMessage();
                         //Détermination des deux prochaines actions
-                        messageEnvoye = this.ModulePriseDeDecisions.DeterminerNouvelleActionIABourre(messageRecu);
-
+                        messageEnvoye = this.ModulePriseDeDecisions.DeterminerNouvelleAction(messageRecu,200);
+                        this.moduleCommunication.EnvoyerMessage(messageEnvoye);
+                        messageEnvoye = this.ModulePriseDeDecisions.DeterminerNouvelleAction(messageRecu,200);
                         if (messageEnvoye.Equals("END"))
                         {
                             ArreterLaCommunication();
                         }
                         //Envoi du message au serveur
                         this.moduleCommunication.EnvoyerMessage(messageEnvoye);
-                    }  
+                
                 }
             }
 

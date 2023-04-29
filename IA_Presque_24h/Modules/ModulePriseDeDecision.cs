@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.NetworkInformation;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -13,19 +14,16 @@ namespace IA_Presque_24h.Modules
         /// <param name="ia">Ia dont dépend le module</param>
         public ModulePriseDeDecisions(IA ia) : base(ia) { }
 
+        Random rand = new Random();
+        public static int nbActionRestant = 2;
+        public static int ameliorationPioche = 1;
+
         /// <summary>Méthode déterminant la prochaine action à réaliser</summary>
         /// <param name="messageRecuDuServeur">Le dernier message reçu du serveur</param>
         /// <returns>Le message à envoyer au serveur</returns>
-        public string DeterminerNouvelleActionIABourre(string messageRecuDuServeur)
+        public string DeterminerNouvelleAction(string messageRecuDuServeur, int scoreJoureur)
         {
-            Random rand = new Random();
-            int ligne = rand.Next(0, 5);
-            int colonne = rand.Next(0, 5);
-            string message = $"DEPLACER|0|{ligne}|{colonne}";
-            if (messageRecuDuServeur.StartsWith("NOK"))
-            {
-                message = "FIN_TOUR";
-            }
+
             //string message = "";
             //if (this.ModuleMemoire.HasCarte())
             //{
@@ -49,8 +47,29 @@ namespace IA_Presque_24h.Modules
             {
                 message = "END";
             }*/
+            string returning;
+            if ((scoreJoureur >= 200) && ameliorationPioche == 1)
+            {
+                returning = "AMELIORER|0";
+                ameliorationPioche = 2;
+            }
+            else if ((scoreJoureur >= 400) && ameliorationPioche == 2)
+            {
+                returning = "AMELIORER|0";
+                ameliorationPioche = 3;
+            }
+            else if (nbActionRestant > 0)
+            {
 
-            return message;
+                returning = $"DEPLACER|0|{rand.NextInt64(0, 6)}|{rand.NextInt64(0, 6)}";
+                nbActionRestant--;
+            }
+            else
+            {
+                returning = "FIN_TOUR";
+                nbActionRestant = 2;
+            }
+            return returning;
         }
     }
 }
