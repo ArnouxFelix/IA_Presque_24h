@@ -1,4 +1,5 @@
 ﻿using IA_Presque_24h.metier.carte;
+using IA_Presque_24h.metier.nain;
 using IA_Presque_24h.Modules;
 using System;
 using System.Collections.Generic;
@@ -31,7 +32,7 @@ namespace IA_Presque_24h
 
         private bool aFiniDeCommuniquer;
 
-
+        private Nain[] equipe = new Nain[3];
 
         /// <summary>Constructeur par défaut</summary>
         public IA()
