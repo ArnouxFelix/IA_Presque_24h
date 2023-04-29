@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.NetworkInformation;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -15,62 +16,47 @@ namespace IA_Presque_24h.Modules
         /// <param name="ia">Ia dont dépend le module</param>
         public ModulePriseDeDecisions(IA ia) : base(ia) { }
 
+        Random rand = new Random();
+        public static int nbActionRestant = 2;
+        public static int ameliorationPioche = 1;
+
         /// <summary>Méthode déterminant la prochaine action à réaliser</summary>
         /// <param name="messageRecuDuServeur">Le dernier message reçu du serveur</param>
         /// <returns>Le message à envoyer au serveur</returns>
-        public string DeterminerNouvelleActionIABourre(string messageRecuDuServeur)
+        public string DeterminerNouvelleAction(string messageRecuDuServeur, int scoreJoureur)
         {
-            string message = "";
-            if (this.ModuleMemoire.HasCarte())
+            string returning;
+            if (scoreJoureur >= 200 && ameliorationPioche == 1)
             {
-                Random rand = new Random();
-                int ligne = rand.Next(0, 5);
-                int colonne = rand.Next(0, 5);
-                message = $"DEPLACER|0|{ligne}|{colonne}";
-                if (messageRecuDuServeur.StartsWith("NOK"))
-                {
-                    message = "FIN_TOUR";
-                }
+                returning = "AMELIORER|0";
+                ameliorationPioche = 2;
+                nbActionRestant--;
+            }
+            else if (scoreJoureur >= 250)
+            {
+                returning = "EMBAUCHER";
+                nbActionRestant--;
+            }
+            else if (scoreJoureur >= 400 && ameliorationPioche == 2)
+            {
+                returning = "AMELIORER|0";
+                ameliorationPioche = 3;
+                nbActionRestant--;
+            }
+            else if (nbActionRestant > 0)
+            {
+
+                returning = $"DEPLACER|0|{rand.NextInt64(0, 6)}|{rand.NextInt64(0, 6)}";
+                nbActionRestant--;
             }
             else
             {
-                message = "MAP";
+                returning = "FIN_TOUR";
+                nbActionRestant = 2;
             }
-            
-            /*Random rand = new Random();
-            int ligne = rand.Next(0, 5);
-            int colonne = rand.Next(0, 5);
-            string message = $"DEPLACER|0|{ligne}|{colonne}";
-            if (messageRecuDuServeur.StartsWith("NOK"))
-            {
-                message = "FIN_TOUR";
-            }*/
-            //string message = "";
-            //if (this.ModuleMemoire.HasCarte())
-            //{
-            //    message = "END";
-            //}
-            //else
-            //{
-            //    message = "MAP";
-            //}
-            /*Random rand = new Random();
-            string[] tabMouv = new string[6] { "UP", "UPRIGHT", "UPLEFT", "DOWNLEFT", "DOWN", "DOWNRIGHT" };
-            int mouvIndex;
-            
-
-            if (messageRecuDuServeur.Equals("OK") || messageRecuDuServeur.Equals("Debut de la partie"))
-            {
-                mouvIndex = rand.Next(tabMouv.Length);
-                message = $"MOVE 0 {tabMouv[mouvIndex]}";
-            }
-            else
-            {
-                message = "END";
-            }*/
-
-            return message;
+            return returning;
         }
+        
         public string DeterminerMeilleurDeplacement(Carte carte)
         {
             string decision = "";

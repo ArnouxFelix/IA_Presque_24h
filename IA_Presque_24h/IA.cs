@@ -63,21 +63,33 @@ namespace IA_Presque_24h
             {
                 //Réception du message du serveur
                 messageRecu = this.ModuleCommunication.RecevoirMessage();
-                while (!messageRecu.StartsWith("DEBUT_TOUR"))
+                while (messageRecu.StartsWith("DEBUT_TOUR"))
                 {
-                    for(int i = 0; i < 2; i++)
-                    {
-                        messageRecu = this.ModuleCommunication.RecevoirMessage();
-                        //Détermination des deux prochaines actions
-                        messageEnvoye = this.ModulePriseDeDecisions.DeterminerNouvelleActionIABourre(messageRecu);
 
+                    // envoie et reception du score
+                    this.ModuleCommunication.EnvoyerMessage("SCORES");
+                    string stringScoreRecu = this.ModuleCommunication.RecevoirMessage();
+                    string[] scoreRecu = stringScoreRecu.Split("|");
+                    Console.WriteLine("||"+stringScoreRecu+"||");
+                    Console.WriteLine("||"+ scoreRecu[1] + "||");
+                    //Détermination des deux prochaines actions
+
+                        messageEnvoye = this.ModulePriseDeDecisions.DeterminerNouvelleAction(messageRecu, Convert.ToInt32(scoreRecu[1]));
+                        this.moduleCommunication.EnvoyerMessage(messageEnvoye);
+                        messageRecu = this.ModuleCommunication.RecevoirMessage();
+                        messageEnvoye = this.ModulePriseDeDecisions.DeterminerNouvelleAction(messageRecu, Convert.ToInt32(scoreRecu[1]));
                         if (messageEnvoye.Equals("END"))
                         {
                             ArreterLaCommunication();
                         }
                         //Envoi du message au serveur
                         this.moduleCommunication.EnvoyerMessage(messageEnvoye);
-                    }  
+                        messageRecu = this.ModuleCommunication.RecevoirMessage();
+
+                        messageEnvoye = this.ModulePriseDeDecisions.DeterminerNouvelleAction(messageRecu, Convert.ToInt32(scoreRecu[1]));
+                        this.moduleCommunication.EnvoyerMessage(messageEnvoye);
+                        messageRecu = this.ModuleCommunication.RecevoirMessage();
+                
                 }
             }
 
